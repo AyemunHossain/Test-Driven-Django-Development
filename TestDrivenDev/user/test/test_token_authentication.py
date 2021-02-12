@@ -6,7 +6,7 @@ from rest_framework import status
 
 
 TOKEN_URL = reverse('user:token')
-
+USER_ME = reverse('user:me')
 
 def create_user(**payload):
     user = get_user_model().objects.create_user(**payload)
@@ -47,3 +47,10 @@ class PublicUserApiTest(TestCase):
             TOKEN_URL, {'email': 'one', 'password': ''})
         self.assertNotIn('token', response.data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    
+        def test_retrive_user_unauthorised(self):
+            """test that authentication is required"""
+        response = self.client.get(USER_ME)
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    

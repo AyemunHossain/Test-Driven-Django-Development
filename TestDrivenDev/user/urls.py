@@ -9,5 +9,6 @@ router.register('user', AccountViewset,basename="account")
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/me/', UserRetiveUpdate.as_view(), name="me"),
     path('api/get-token/', TokenloginApiView.as_view(), name="token"),
 ]
